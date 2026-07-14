@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sovstac — Previews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Ubuntu:wght@300;400;700&family=Ubuntu+Mono&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 64px 48px;
+    background: #00251C; color: #DFFFE8;
+    font-family: 'Ubuntu', system-ui, sans-serif;
+  }
+  header { border-bottom: 1px solid rgba(8,225,172,.28); padding-bottom: 28px; margin-bottom: 44px; }
+  .logo { font-family: 'Michroma', sans-serif; font-size: 20px; display: flex; align-items: center; }
+  .logo .frame {
+    display: inline-block; width: .62em; height: .62em;
+    border: 2px solid #08E1AC; margin: 0 .08em; vertical-align: middle;
+  }
+  .kicker {
+    font-family: 'Ubuntu Mono', monospace; font-size: 12px; letter-spacing: 2px;
+    color: #08E1AC; margin-top: 12px;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; }
+  .card {
+    display: block; padding: 26px; text-decoration: none;
+    background: #04372B; border: 1px solid #0C5C46; border-radius: 2px;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: #08E1AC; transform: translateY(-2px); }
+  .card h2 { margin: 0 0 8px; font-family: 'Michroma', sans-serif; font-size: 14px; color: #DFFFE8; }
+  .card p { margin: 0; font-size: 13px; line-height: 1.6; color: #7FA99A; font-weight: 300; }
+  .card .tag {
+    display: inline-block; margin-top: 14px; padding: 4px 8px;
+    font-family: 'Ubuntu Mono', monospace; font-size: 10px; letter-spacing: 1px;
+    color: #08E1AC; border: 1px solid rgba(8,225,172,.35);
+  }
+  .card--soon { opacity: .45; pointer-events: none; }
+  footer {
+    margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(8,225,172,.18);
+    font-family: 'Ubuntu Mono', monospace; font-size: 11px; color: #7FA99A; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">S<span class="frame"></span>VSTAC</div>
+    <div class="kicker">PREVIEW LAB — TUNE IT HERE, THEN WE PORT IT</div>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="./intro-background.html">
+      <h2>Intro Background</h2>
+      <p>Antigravity particle field, no content yet. Control panel: background, all 15 antigravity props, effects. Apply &amp; Save to keep your tuning.</p>
+      <span class="tag">READY</span>
+    </a>
+
+    <a class="card" href="./logo-reveal.html">
+      <h2>Logo Reveal</h2>
+      <p>Cinematic bracket sequence: the frame opens on your custom line, seals it away, then opens again and S[]VSTAC assembles around it. Full timing, easing and geometry control, with a scrubber.</p>
+      <span class="tag">READY</span>
+    </a>
+
+    <div class="card card--soon">
+      <h2>Work / Case Studies</h2>
+      <p>Project grid and case-study detail.</p>
+      <span class="tag">NOT STARTED</span>
+    </div>
+
+    <div class="card card--soon">
+      <h2>How We Build</h2>
+      <p>Process and architecture, the engineering-credibility page.</p>
+      <span class="tag">NOT STARTED</span>
+    </div>
+
+    <div class="card card--soon">
+      <h2>Contact / Audit</h2>
+      <p>Book-an-audit flow.</p>
+      <span class="tag">NOT STARTED</span>
+    </div>
+  </div>
+
+  <footer>Ownership · Precision · Independence · Privacy</footer>
+</body>
+</html>

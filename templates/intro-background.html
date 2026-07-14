@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sovstac — Intro Background</title>
+
+<!--
+  Sovstac intro background — antigravity particle field, no content yet.
+
+  This is the TEMPLATE. The shipped file is previews/intro-background.html, built by
+  `npm run build`, which inlines three, the fonts and lib/ so it opens standalone.
+
+  Settings are LIVE but only persisted when you press Apply & Save.
+-->
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js"
+  }
+}
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+
+  body {
+    background: var(--sv-bg, #00251C);
+    overflow: hidden;
+    font-family: "Ubuntu Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+  /* Soft radial lift behind the field so the ring reads as lit. Off by default. */
+  #glow {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--sv-accent, #08E1AC) 22%, transparent) 0%,
+      transparent 55%
+    );
+    opacity: var(--fx-glow, 0);
+  }
+
+  #canvas { position: absolute; inset: 0; z-index: 1; }
+
+  #vignette {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    opacity: var(--fx-vignette, 0);
+    background: radial-gradient(ellipse at center, transparent 35%, var(--sv-bg-deep, #000) 100%);
+  }
+
+  #grain {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    opacity: var(--fx-grain, 0);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div id="glow"></div>
+  <div id="canvas"></div>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+</div>
+
+<script type="module">
+import { createAntigravity } from '../lib/antigravity.js';
+import { createControlPanel } from '../lib/control-panel.js';
+import { DEFAULTS, SCHEMA, PRESETS } from '../lib/config-welcome.js';
+
+const root = document.documentElement;
+const ag = createAntigravity(document.getElementById('canvas'), {});
+
+function render(c) {
+  root.style.setProperty('--sv-bg', c.background.bg);
+  root.style.setProperty('--sv-bg-deep', c.background.bgDeep);
+  root.style.setProperty('--sv-accent', c.antigravity.color);
+  root.style.setProperty('--fx-glow', c.effects.glow);
+  root.style.setProperty('--fx-vignette', c.effects.vignette);
+  root.style.setProperty('--fx-grain', c.effects.grain);
+  ag.update(c.antigravity);
+}
+
+createControlPanel({
+  defaults: DEFAULTS,
+  schema: SCHEMA,
+  presets: PRESETS,
+  storageKey: 'sovstac.welcome.config',
+  subtitle: 'intro background / antigravity — C to hide',
+  exportName: 'sovstac-intro-background.config.json',
+  onChange: render,
+});
+</script>
+</body>
+</html>

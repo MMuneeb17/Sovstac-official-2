@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sovstac — Logo Reveal</title>
+
+<!--
+  Sovstac logo reveal.
+
+  This is the TEMPLATE. The shipped file is previews/logo-reveal.html, built by
+  `npm run build`, which inlines gsap, the fonts and lib/ so it opens standalone.
+
+  Settings are LIVE but only persisted when you press Apply & Save.
+
+  Keys:  C = hide panel   Space = play/pause   R = replay
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Michroma&family=Ubuntu:wght@300;400;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+  rel="stylesheet" />
+
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.15.0/+esm"
+  }
+}
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+
+  body {
+    background: var(--sv-bg, #00251C);
+    overflow: hidden;
+    font-family: "Ubuntu Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+  #glow {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--sv-accent, #08E1AC) 20%, transparent) 0%,
+      transparent 55%
+    );
+    opacity: var(--fx-glow, 0);
+  }
+
+  #reveal { position: absolute; inset: 0; z-index: 1; }
+
+  #vignette {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    opacity: var(--fx-vignette, 0);
+    background: radial-gradient(ellipse at center, transparent 35%, #000 100%);
+  }
+
+  #grain {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    opacity: var(--fx-grain, 0);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---- transport ---- */
+  .transport {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    z-index: 9997;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 16px;
+    background: rgba(11,15,14,.9);
+    border: 1px solid #24302C; border-radius: 6px;
+    backdrop-filter: blur(8px);
+    transition: opacity .25s, transform .25s;
+  }
+  .transport[data-hidden="true"] { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(12px); }
+
+  .transport button {
+    width: 30px; height: 30px; border-radius: 4px; cursor: pointer;
+    background: #141A18; color: #08E1AC; border: 1px solid #24302C;
+    font-size: 12px; display: grid; place-items: center; font-family: inherit;
+  }
+  .transport button:hover { border-color: #08E1AC; }
+
+  .transport input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 340px; height: 3px; border-radius: 2px;
+    background: #24302C; outline: none; cursor: pointer;
+  }
+  .transport input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #08E1AC; cursor: pointer;
+    border: 2px solid #0B0F0E; box-shadow: 0 0 0 1px #08E1AC;
+  }
+
+  .transport .time {
+    color: #7C918A; font-size: 11px; min-width: 84px;
+    font-variant-numeric: tabular-nums; text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div id="glow"></div>
+  <div id="reveal"></div>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+</div>
+
+<div class="transport" id="transport">
+  <button id="playBtn" title="Play / pause (Space)">▶</button>
+  <button id="replayBtn" title="Replay (R)">↺</button>
+  <input type="range" id="scrub" min="0" max="1000" value="0" />
+  <span class="time" id="time">0.00 / 0.00s</span>
+</div>
+
+<script type="module">
+import { createLogoReveal } from '../lib/logo-reveal.js';
+import { createControlPanel } from '../lib/control-panel.js';
+import { DEFAULTS, SCHEMA, PRESETS } from '../lib/config-logo-reveal.js';
+
+const $ = id => document.getElementById(id);
+const root = document.documentElement;
+
+const scrub = $('scrub');
+const timeOut = $('time');
+const playBtn = $('playBtn');
+
+let scrubbing = false;
+
+const reveal = createLogoReveal($('reveal'), DEFAULTS, {
+  onProgress: (p, dur) => {
+    if (!scrubbing) scrub.value = String(Math.round(p * 1000));
+    timeOut.textContent = `${(p * dur).toFixed(2)} / ${dur.toFixed(2)}s`;
+    playBtn.textContent = reveal.isPaused() ? '▶' : '❚❚';
+  },
+});
+
+function render(c) {
+  root.style.setProperty('--sv-bg', c.palette.bg);
+  root.style.setProperty('--sv-accent', c.palette.bracketSealed);
+  root.style.setProperty('--fx-glow', c.effects.glow);
+  root.style.setProperty('--fx-vignette', c.effects.vignette);
+  root.style.setProperty('--fx-grain', c.effects.grain);
+  reveal.update(c);
+}
+
+const panel = createControlPanel({
+  defaults: DEFAULTS,
+  schema: SCHEMA,
+  presets: PRESETS,
+  storageKey: 'sovstac.logo-reveal.config',
+  subtitle: 'logo reveal — C hide · Space play · R replay',
+  exportName: 'sovstac-logo-reveal.config.json',
+  onChange: render,
+  actions: [{ label: '↺ Replay', onClick: () => reveal.restart() }],
+});
+
+/* transport wiring */
+playBtn.onclick = () => {
+  reveal.toggle();
+  playBtn.textContent = reveal.isPaused() ? '▶' : '❚❚';
+};
+$('replayBtn').onclick = () => reveal.restart();
+
+// Scrubbing pauses, so you can park on a frame and tune it.
+scrub.oninput = () => {
+  scrubbing = true;
+  reveal.pause();
+  reveal.seek(Number(scrub.value) / 1000);
+  playBtn.textContent = '▶';
+};
+scrub.onchange = () => { scrubbing = false; };
+
+window.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement || t instanceof HTMLSelectElement) return;
+
+  if (e.code === 'Space') {
+    e.preventDefault();
+    reveal.toggle();
+    playBtn.textContent = reveal.isPaused() ? '▶' : '❚❚';
+  }
+  if (e.key === 'r' || e.key === 'R') reveal.restart();
+  if (e.key === 'c' || e.key === 'C') {
+    const tr = $('transport');
+    tr.dataset.hidden = tr.dataset.hidden === 'true' ? 'false' : 'true';
+  }
+});
+
+// Fonts must land before Michroma can be measured, else the letters mis-place.
+document.fonts.ready.then(() => reveal.restart());
+</script>
+</body>
+</html>
