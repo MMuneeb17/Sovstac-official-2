@@ -1,0 +1,115 @@
+================================================================================
+  LOGO REVEAL  —  "Own your stack"
+================================================================================
+  code     lib/logo-reveal.js   (GSAP timeline, SVG drawn live)
+  preview  previews/logo-reveal.html
+  config   lib/config-logo-reveal.js
+  runtime  ~7.9s at speed 1     keys: Space play/pause · R replay · scrubber
+
+  THE IDEA
+  The brackets you watch the whole time ARE the "[ ]" in the wordmark. They open
+  on your line, seal it away, then the letters assemble around an EMPTY slot —
+  and the frame flies into the hole it belongs in, completing S[]VSTAC.
+  The frame never becomes the logo; it is revealed to have been it all along.
+
+  Two facts make it work, both measured from the real artwork:
+    · the bracket is 3 filled rects (spine 27u + two arms 22u), NEVER scaled —
+      the spine and arm weights differ, so a scaleX would distort them
+    · the letters are real Michroma, placed by measuring each glyph's ink box
+
+--------------------------------------------------------------------------------
+  BEAT 1 — boot            ⟨0.0s⟩  ease expo.out     timing: bootIn, hold1
+--------------------------------------------------------------------------------
+
+                         ▓▓        ▓▓
+                         ▓          ▓            the sealed frame fades up,
+                         ▓          ▓            dead centre. a rectangle
+                         ▓          ▓            bisected by a hairline slit —
+                         ▓▓        ▓▓            the icon mark at rest.
+                            [    ]
+
+--------------------------------------------------------------------------------
+  BEAT 2 — open            ⟨0.7s⟩  ease power4.inOut  timing: unseal1, open1
+--------------------------------------------------------------------------------
+
+     ▓▓                                    ▓▓     arms retract first, then the
+     ▓                                      ▓     frame parts horizontally around
+     ▓            (your line)               ▓     its fixed centre. it opens
+     ▓                                      ▓     exactly as wide as the text
+     ▓▓                                    ▓▓     needs — no wider  (autoFit).
+     [                                      ]
+
+--------------------------------------------------------------------------------
+  BEAT 3 — your line       ⟨1.6s⟩  ease expo.out     timing: textIn, holdText
+--------------------------------------------------------------------------------
+
+     ▓▓                                    ▓▓
+     ▓                                      ▓     your custom line appears inside
+     ▓        Own  your  stack.             ▓     the chamber, clipped to it, in
+     ▓                                      ▓     Ubuntu Mono. held, legible.
+     ▓▓                                    ▓▓
+     [                                      ]     content.text · content.textFont
+
+--------------------------------------------------------------------------------
+  BEAT 4 — close + seal    ⟨3.3s⟩  ease power4.inOut  timing: close1, seal1
+--------------------------------------------------------------------------------
+
+         ▓▓                        ▓▓
+         ▓      Own you…            ▓            the frame closes. the text is
+         ▓        st…               ▓            NOT faded — the shrinking clip
+         ▓                          ▓            drags it inward and crushes it
+         ▓▓                        ▓▓            out of existence. it goes with
+              [          ]                       the brackets.
+
+              ▓▓        ▓▓                       ── SEAL ──  fillPhase 0→1
+              ▓          ▓                        a hard COLOUR CUT to accent mint
+              ▓          ▓                        (not a fade — a machine latches
+              ▓▓        ▓▓                        instantly). the one highlight.
+                 [    ]                           held sealed briefly.
+
+--------------------------------------------------------------------------------
+  BEAT 5 — the empty slot  ⟨5.2s⟩  ease expo.out     timing: letterDur,
+           (the hole)                                        letterStagger, holdEmpty
+--------------------------------------------------------------------------------
+
+     the frame swings open again and the six Michroma letters assemble OUTWARD
+     from the centre — S and V first, then STAC, the A last (its box overlaps
+     the T by 49u, Michroma's own kern, so it settles IN, never crosses).
+
+     for one held beat the wordmark sits there with a HOLE in it:
+
+              S  ▯▯  V S T A C            S ▯ VSTAC  — nothing in the
+                 ▯▯                        brackets' place. a gap where
+                (empty)                    the "O" should be.
+
+--------------------------------------------------------------------------------
+  BEAT 6 — brackets fly in ⟨6.6s⟩  ease power4.inOut  timing: collapse, payoff
+--------------------------------------------------------------------------------
+
+     the brackets sweep in from wide and SEAT into the slot. they are drawn
+     BEHIND the letters, so they appear to travel behind the wordmark and
+     surface only where nothing covers them — the hole they belong in.
+     (the pair sits left of centre, so there is no width at which both clear
+      the letters; painting them behind turns the collision into the effect.)
+
+              S [] V S T A C                  S[]VSTAC — complete.
+              ▔▔▔▔▔▔▔▔▔▔▔▔▔                   accent brackets, pale letters,
+              ~~~~~~~~~~~~~~~  ⟨7.4s⟩          then a 1px hairline rule draws in.
+
+--------------------------------------------------------------------------------
+  TIMELINE (at speed 1)
+--------------------------------------------------------------------------------
+  0.0   boot ── 0.7  open ── 1.6  text ─────── 3.3  close/seal ──
+        5.2  reveal+empty ── 6.6  fly-in ── 7.4  rule ── 7.9  end
+
+--------------------------------------------------------------------------------
+  KNOBS (control panel)
+--------------------------------------------------------------------------------
+  Content   text · font · size · tracking · rule
+  Palette   bg · bracket working/sealed/logo · text · letters · rule
+  Geometry  hero frame height · logo width · open-to-fit · padding
+            open width · fly-in width · arm reach sealed/open · slit gap
+  Timing    speed · every beat above, in ms · hold (empty slot) · loop
+  Easing    open · close · unseal · text · release · payoff · letters
+  Effects   glow · vignette · grain
+================================================================================

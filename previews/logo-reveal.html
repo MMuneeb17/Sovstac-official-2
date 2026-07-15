@@ -192,11 +192,15 @@ function setPath(o, p, v) {
 
 /* ===== lib/config-logo-reveal.js ===== */
 /**
- * Config for the LOGO REVEAL preview.
+ * Config for the LOGO REVEAL preview — the "Own your stack" sequence.
  *
- * All geometry is expressed in WORDMARK UNITS — the coordinate space of the
- * official S[]VSTAC asset, viewBox "0 0 2000 254". Those numbers are measured
- * from the real artwork, not invented:
+ * The frame boots sealed → unseals → opens on your custom line → closes,
+ * squeezing the line out of existence → seals → opens again, and the six
+ * Michroma letters assemble around it (with the bracket slot briefly empty)
+ * before the frame flies into place, revealing S[]VSTAC.
+ *
+ * All geometry is in WORDMARK UNITS — the coordinate space of the official
+ * S[]VSTAC asset, viewBox "0 0 2000 254", measured from the real artwork:
  *
  *   cap line      y = 5      baseline  y = 248.1     cap height = 243.1
  *   left "["      x 328..408          right "]"      x 423..503
@@ -206,28 +210,22 @@ function setPath(o, p, v) {
  *
  * The unequal spine/arm weights are why the brackets are drawn as separate rects
  * and never scaled — a scaleX would thin the spines and fatten the arms.
- *
- * Letters are live Michroma Regular. The wordmark's letters were verified to be
- * unmodified Michroma (pixel overlay, IoU > 0.97 per glyph), so we typeset them
- * rather than shipping an image.
  */
-
-/** Measured ink extents of each glyph in the wordmark, in wordmark units. */
 const WORDMARK = {
   viewBox: [0, 0, 2000, 254],
   capLine: 5,
   baseline: 248.1,
   capHeight: 243.1,
-  pairCx: 415.5,          // centre of the bracket pair
+  pairCx: 415.5,
   bracketTop: 6,
   bracketBottom: 253,
-  spine: 27,              // vertical stroke weight
-  armThickness: 22,       // horizontal stroke weight
-  restChamber: 121,       // clear width between the spines' inner faces, at rest
-  restArmReach: 53,       // how far each arm reaches in from its spine
-  restGap: 15,            // tip-to-tip slit between "[" and "]"
-  // Where each letter's INK starts and ends. T and A overlap by 49 units — that is
-  // Michroma's own T/A kern, and it is why the letters can't naively fly in on x.
+  spine: 27,
+  armThickness: 22,
+  restChamber: 121,
+  restArmReach: 53,
+  restGap: 15,
+  // Measured ink extents of each glyph. T and A overlap by 49 units — that is
+  // Michroma's own T/A kern, and it is why letters never animate on x individually.
   letters: [
     { ch: 'S', x0: 0,    x1: 299 },
     { ch: 'V', x0: 524,  x1: 826 },
@@ -266,10 +264,7 @@ const DEFAULTS = {
     autoFit: true,
     textPadding: 90,        // wordmark units of clear space each side of the text
     openChamber: 1180,      // used only when autoFit is off
-    // How wide the frame swings before it flies into the slot. It can be generous:
-    // the brackets sit behind the letters, so the overlap reads as the frame passing
-    // behind the wordmark rather than colliding with it.
-    apertureOpen: 900,
+    apertureOpen: 900,      // how wide the frame swings before it flies into the logo
     armRest: 53,            // arm reach when sealed (the wordmark's true value)
     armOpen: 18,            // arm reach while open — arms retract so walls read as walls
     gap: 15,                // tip-to-tip slit at rest
@@ -294,7 +289,7 @@ const DEFAULTS = {
     // fly in. This pause is the whole point — don't set it to 0.
     holdEmpty: 420,
     collapse: 760,          // the brackets flying into the empty slot
-    ruleIn: 400,
+    ruleIn: 500,
     loopDelay: 1200,        // pause before looping, if loop is on
     loop: false,
   },

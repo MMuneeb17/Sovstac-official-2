@@ -1,0 +1,78 @@
+================================================================================
+  INTRO BACKGROUND  —  "Antigravity"
+================================================================================
+  code     lib/antigravity.js   (vanilla Three.js port of React Bits)
+  preview  previews/intro-background.html
+  config   lib/config-welcome.js
+  loop     continuous, cursor-driven — no start or end
+
+  THE IDEA
+  A field of particles drifts freely. Wherever the cursor goes, the particles
+  near it are repelled OUTWARD into a glowing ring — a perimeter around a
+  protected void. That ring is the brand's "[ ]" frame, drawn in motion:
+  a boundary that forms around whatever you point at.
+
+--------------------------------------------------------------------------------
+  BEAT 1 — rest field            config: count, particleShape, color
+--------------------------------------------------------------------------------
+
+        ·      ˙        ·     ·          ˙
+     ˙      ·      ·        ·      ˙          particles drift on their own
+        ·        ˙      ·        ·      ·     paths, slow and scattered
+   ·      ·   ˙        ·      ·        ˙
+       ˙       ·         ·        ·      ·    (autoAnimate: the focal point
+     ·      ˙      ·   ·      ˙       ·        wanders on its own when idle)
+
+--------------------------------------------------------------------------------
+  BEAT 2 — cursor enters         config: magnetRadius, lerpSpeed
+--------------------------------------------------------------------------------
+
+        ·      ˙        ·     ·          ˙
+     ˙      ·     · · ·    ·      ˙           particles within magnetRadius
+        ·      ·   (+)  ·      ·      ·       of the cursor begin to feel
+   ·      ·   ·  · · ·    ·      ·        ˙   the field and lerp toward the
+       ˙       ·         ·        ·           forming ring
+     ·      ˙      ·   ·      ˙       ·
+
+--------------------------------------------------------------------------------
+  BEAT 3 — the ring forms        config: ringRadius, fieldStrength,
+           (the payoff)                  waveAmplitude, waveSpeed, rotationSpeed
+--------------------------------------------------------------------------------
+
+        ·      ˙                  ·      ˙
+     ˙          ●  ○  ●  ○            ˙        the captured particles hold a
+             ○           ●                    RING around the cursor — a "[ ]"
+        ·   ●     (+)      ○    ·             perimeter around an empty centre.
+             ○           ●                    the ring shimmers (wave) and can
+     ˙          ●  ○  ●  ○            ·        slowly rotate; particles pulse.
+        ·                          ˙      ·
+                                             move the cursor → the ring follows.
+
+--------------------------------------------------------------------------------
+  PARTICLE SHAPES               config: particleShape
+--------------------------------------------------------------------------------
+
+  capsule      ▬     the default rod, points at the cursor
+  sphere       ●
+  box          ▪
+  tetrahedron  ▲
+  bracket      [ ]   the brand mark itself — a full pair per particle
+  bracket-single [   or   ]     lone brackets, randomly open/close
+
+  With the bracket shapes, the big ring is made of hundreds of little "[ ]"s:
+  the perimeter glyph, built out of perimeter glyphs.
+
+        [ ]    ]     [       [ ]
+     ]      [ ]         [ ]       [        every particle is a bracket,
+        [       (+)        ]  [           orbiting to form one larger
+     [ ]     ]        [ ]      [ ]         protective frame
+
+--------------------------------------------------------------------------------
+  KNOBS (control panel)
+--------------------------------------------------------------------------------
+  Background   bg, vignette colour
+  Antigravity  count · magnetRadius · ringRadius · fieldStrength · waveSpeed
+               waveAmplitude · particleSize · variance · pulseSpeed · lerpSpeed
+               rotationSpeed · depthFactor · opacity · autoAnimate · shape
+  Effects      glow · vignette · grain
+================================================================================
