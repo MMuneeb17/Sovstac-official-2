@@ -1,0 +1,188 @@
+- generic [active] [ref=e1]:
+  - img [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: S
+        - generic [ref=e15]: V
+        - generic [ref=e16]: S
+        - generic [ref=e17]: T
+        - generic [ref=e18]: A
+        - generic [ref=e19]: C
+      - generic [ref=e20]:
+        - generic [ref=e21]: e
+        - generic [ref=e22]: r
+        - generic [ref=e23]: e
+        - generic [ref=e24]: i
+        - generic [ref=e25]: g
+        - generic [ref=e26]: "n"
+        - generic [ref=e27]: k
+  - generic [ref=e28]:
+    - button "❚❚" [ref=e29] [cursor=pointer]
+    - button "↺" [ref=e30] [cursor=pointer]
+    - slider [ref=e31] [cursor=pointer]: "1"
+    - generic [ref=e32]: 0.01 / 6.47s
+  - generic [ref=e33]:
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]: Sovstac Control
+        - generic [ref=e37]: logo reveal — C hide · Space play · R replay
+      - button "✕" [ref=e38] [cursor=pointer]
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]: Preset
+        - combobox [ref=e42] [cursor=pointer]:
+          - option "Signal (default)" [selected]
+          - option "Taut"
+          - option "Slow burn"
+          - option "Terminal"
+          - option "Daylight"
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - button "✎ Word ▾" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: ✎
+            - generic [ref=e47]: Word
+            - generic [ref=e48]: ▾
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - generic [ref=e51]: Insert after SOV
+              - textbox [ref=e53]: ereign
+            - generic [ref=e54]:
+              - generic [ref=e55]: Insert after STAC
+              - textbox [ref=e57]: k
+            - generic [ref=e58]:
+              - generic [ref=e59]: Insert Font
+              - combobox [ref=e61]:
+                - option "Ubuntu" [selected]
+                - option "Ubuntu Mono"
+                - option "Michroma"
+            - generic [ref=e62]:
+              - generic [ref=e63]:
+                - generic [ref=e64]: Insert Size
+                - generic [ref=e65]: "150"
+              - slider [ref=e66] [cursor=pointer]: "150"
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - generic [ref=e69]: Insert Gap
+                - generic [ref=e70]: "14"
+              - slider [ref=e71] [cursor=pointer]: "14"
+            - generic [ref=e73]:
+              - generic [ref=e74]: Hairline Rule
+              - button [ref=e75] [cursor=pointer]
+        - generic [ref=e76]:
+          - button "◉ Palette ▾" [ref=e77] [cursor=pointer]:
+            - generic [ref=e78]: ◉
+            - generic [ref=e79]: Palette
+            - generic [ref=e80]: ▾
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: Background
+              - generic [ref=e85]:
+                - textbox [ref=e86] [cursor=pointer]: "#00251c"
+                - textbox [ref=e87]: "#00251C"
+              - generic [ref=e88]:
+                - button "#08E1AC" [ref=e89] [cursor=pointer]
+                - button "#00251C" [ref=e90] [cursor=pointer]
+                - button "#DFFFE8" [ref=e91] [cursor=pointer]
+                - button "#08458C" [ref=e92] [cursor=pointer]
+                - button "#B0CFF3" [ref=e93] [cursor=pointer]
+                - button "#99120B" [ref=e94] [cursor=pointer]
+                - button "#FAD3D1" [ref=e95] [cursor=pointer]
+                - button "#000000" [ref=e96] [cursor=pointer]
+                - button "#2B2B2B" [ref=e97] [cursor=pointer]
+                - button "#808080" [ref=e98] [cursor=pointer]
+                - button "#E8E8E8" [ref=e99] [cursor=pointer]
+                - button "#FFFFFF" [ref=e100] [cursor=pointer]
+            - generic [ref=e101]:
+              - generic [ref=e102]: Bracket Frame
+              - generic [ref=e104]:
+                - textbox [ref=e105] [cursor=pointer]: "#08e1ac"
+                - textbox [ref=e106]: "#08E1AC"
+              - generic [ref=e107]:
+                - button "#08E1AC" [ref=e108] [cursor=pointer]
+                - button "#00251C" [ref=e109] [cursor=pointer]
+                - button "#DFFFE8" [ref=e110] [cursor=pointer]
+                - button "#08458C" [ref=e111] [cursor=pointer]
+                - button "#B0CFF3" [ref=e112] [cursor=pointer]
+                - button "#99120B" [ref=e113] [cursor=pointer]
+                - button "#FAD3D1" [ref=e114] [cursor=pointer]
+                - button "#000000" [ref=e115] [cursor=pointer]
+                - button "#2B2B2B" [ref=e116] [cursor=pointer]
+                - button "#808080" [ref=e117] [cursor=pointer]
+                - button "#E8E8E8" [ref=e118] [cursor=pointer]
+                - button "#FFFFFF" [ref=e119] [cursor=pointer]
+            - generic [ref=e120]:
+              - generic [ref=e121]: Caps (Michroma)
+              - generic [ref=e123]:
+                - textbox [ref=e124] [cursor=pointer]: "#08e1ac"
+                - textbox [ref=e125]: "#08E1AC"
+              - generic [ref=e126]:
+                - button "#08E1AC" [ref=e127] [cursor=pointer]
+                - button "#00251C" [ref=e128] [cursor=pointer]
+                - button "#DFFFE8" [ref=e129] [cursor=pointer]
+                - button "#08458C" [ref=e130] [cursor=pointer]
+                - button "#B0CFF3" [ref=e131] [cursor=pointer]
+                - button "#99120B" [ref=e132] [cursor=pointer]
+                - button "#FAD3D1" [ref=e133] [cursor=pointer]
+                - button "#000000" [ref=e134] [cursor=pointer]
+                - button "#2B2B2B" [ref=e135] [cursor=pointer]
+                - button "#808080" [ref=e136] [cursor=pointer]
+                - button "#E8E8E8" [ref=e137] [cursor=pointer]
+                - button "#FFFFFF" [ref=e138] [cursor=pointer]
+            - generic [ref=e139]:
+              - generic [ref=e140]: Insert (Ubuntu)
+              - generic [ref=e142]:
+                - textbox [ref=e143] [cursor=pointer]: "#dfffe8"
+                - textbox [ref=e144]: "#DFFFE8"
+              - generic [ref=e145]:
+                - button "#08E1AC" [ref=e146] [cursor=pointer]
+                - button "#00251C" [ref=e147] [cursor=pointer]
+                - button "#DFFFE8" [ref=e148] [cursor=pointer]
+                - button "#08458C" [ref=e149] [cursor=pointer]
+                - button "#B0CFF3" [ref=e150] [cursor=pointer]
+                - button "#99120B" [ref=e151] [cursor=pointer]
+                - button "#FAD3D1" [ref=e152] [cursor=pointer]
+                - button "#000000" [ref=e153] [cursor=pointer]
+                - button "#2B2B2B" [ref=e154] [cursor=pointer]
+                - button "#808080" [ref=e155] [cursor=pointer]
+                - button "#E8E8E8" [ref=e156] [cursor=pointer]
+                - button "#FFFFFF" [ref=e157] [cursor=pointer]
+            - generic [ref=e158]:
+              - generic [ref=e159]: Hairline Rule
+              - generic [ref=e161]:
+                - textbox [ref=e162] [cursor=pointer]: "#08e1ac"
+                - textbox [ref=e163]: "#08E1AC"
+              - generic [ref=e164]:
+                - button "#08E1AC" [ref=e165] [cursor=pointer]
+                - button "#00251C" [ref=e166] [cursor=pointer]
+                - button "#DFFFE8" [ref=e167] [cursor=pointer]
+                - button "#08458C" [ref=e168] [cursor=pointer]
+                - button "#B0CFF3" [ref=e169] [cursor=pointer]
+                - button "#99120B" [ref=e170] [cursor=pointer]
+                - button "#FAD3D1" [ref=e171] [cursor=pointer]
+                - button "#000000" [ref=e172] [cursor=pointer]
+                - button "#2B2B2B" [ref=e173] [cursor=pointer]
+                - button "#808080" [ref=e174] [cursor=pointer]
+                - button "#E8E8E8" [ref=e175] [cursor=pointer]
+                - button "#FFFFFF" [ref=e176] [cursor=pointer]
+        - button "▦ Geometry ▾" [ref=e178] [cursor=pointer]:
+          - generic [ref=e179]: ▦
+          - generic [ref=e180]: Geometry
+          - generic [ref=e181]: ▾
+        - button "⏱ Timing ▾" [ref=e183] [cursor=pointer]:
+          - generic [ref=e184]: ⏱
+          - generic [ref=e185]: Timing
+          - generic [ref=e186]: ▾
+        - button "⇝ Easing ▾" [ref=e188] [cursor=pointer]:
+          - generic [ref=e189]: ⇝
+          - generic [ref=e190]: Easing
+          - generic [ref=e191]: ▾
+        - button "▨ Effects ▾" [ref=e193] [cursor=pointer]:
+          - generic [ref=e194]: ▨
+          - generic [ref=e195]: Effects
+          - generic [ref=e196]: ▾
+    - generic [ref=e197]:
+      - button "↺ Replay" [ref=e198] [cursor=pointer]
+      - button "Apply & Save" [ref=e200]
+      - button "Export JSON" [ref=e201] [cursor=pointer]
+      - button "Revert" [ref=e202] [cursor=pointer]
+      - button "Reset to brand defaults" [ref=e203] [cursor=pointer]

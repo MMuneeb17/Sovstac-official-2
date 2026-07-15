@@ -1,0 +1,169 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]: Sovstac Control
+      - generic [ref=e9]: intro background / antigravity — C to hide
+    - button "✕" [ref=e10] [cursor=pointer]
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Preset
+      - combobox [ref=e14] [cursor=pointer]:
+        - option "Signal (default)" [selected]
+        - option "Deep Space"
+        - option "Blueprint"
+        - option "Daylight"
+        - option "Overdrive"
+        - option "Still (reduced motion)"
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - button "◉ Background ▾" [ref=e17] [cursor=pointer]:
+          - generic [ref=e18]: ◉
+          - generic [ref=e19]: Background
+          - generic [ref=e20]: ▾
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - generic [ref=e23]: Background
+            - generic [ref=e25]:
+              - textbox [ref=e26] [cursor=pointer]: "#000000"
+              - textbox [ref=e27]: "#000000"
+            - generic [ref=e28]:
+              - button "#08E1AC" [ref=e29] [cursor=pointer]
+              - button "#00251C" [ref=e30] [cursor=pointer]
+              - button "#DFFFE8" [ref=e31] [cursor=pointer]
+              - button "#08458C" [ref=e32] [cursor=pointer]
+              - button "#B0CFF3" [ref=e33] [cursor=pointer]
+              - button "#99120B" [ref=e34] [cursor=pointer]
+              - button "#FAD3D1" [ref=e35] [cursor=pointer]
+              - button "#000000" [ref=e36] [cursor=pointer]
+              - button "#2B2B2B" [ref=e37] [cursor=pointer]
+              - button "#808080" [ref=e38] [cursor=pointer]
+              - button "#E8E8E8" [ref=e39] [cursor=pointer]
+              - button "#FFFFFF" [ref=e40] [cursor=pointer]
+          - generic [ref=e41]:
+            - generic [ref=e42]: Vignette Colour
+            - generic [ref=e44]:
+              - textbox [ref=e45] [cursor=pointer]: "#000000"
+              - textbox [ref=e46]: "#000000"
+            - generic [ref=e47]:
+              - button "#08E1AC" [ref=e48] [cursor=pointer]
+              - button "#00251C" [ref=e49] [cursor=pointer]
+              - button "#DFFFE8" [ref=e50] [cursor=pointer]
+              - button "#08458C" [ref=e51] [cursor=pointer]
+              - button "#B0CFF3" [ref=e52] [cursor=pointer]
+              - button "#99120B" [ref=e53] [cursor=pointer]
+              - button "#FAD3D1" [ref=e54] [cursor=pointer]
+              - button "#000000" [ref=e55] [cursor=pointer]
+              - button "#2B2B2B" [ref=e56] [cursor=pointer]
+              - button "#808080" [ref=e57] [cursor=pointer]
+              - button "#E8E8E8" [ref=e58] [cursor=pointer]
+              - button "#FFFFFF" [ref=e59] [cursor=pointer]
+      - generic [ref=e60]:
+        - button "✵ Antigravity ▾" [ref=e61] [cursor=pointer]:
+          - generic [ref=e62]: ✵
+          - generic [ref=e63]: Antigravity
+          - generic [ref=e64]: ▾
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]: Particle Colour
+            - generic [ref=e69]:
+              - textbox [ref=e70] [cursor=pointer]: "#08e1ac"
+              - textbox [ref=e71]: "#08E1AC"
+            - generic [ref=e72]:
+              - button "#08E1AC" [ref=e73] [cursor=pointer]
+              - button "#00251C" [ref=e74] [cursor=pointer]
+              - button "#DFFFE8" [ref=e75] [cursor=pointer]
+              - button "#08458C" [ref=e76] [cursor=pointer]
+              - button "#B0CFF3" [ref=e77] [cursor=pointer]
+              - button "#99120B" [ref=e78] [cursor=pointer]
+              - button "#FAD3D1" [ref=e79] [cursor=pointer]
+              - button "#000000" [ref=e80] [cursor=pointer]
+              - button "#2B2B2B" [ref=e81] [cursor=pointer]
+              - button "#808080" [ref=e82] [cursor=pointer]
+              - button "#E8E8E8" [ref=e83] [cursor=pointer]
+              - button "#FFFFFF" [ref=e84] [cursor=pointer]
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]: Count
+              - generic [ref=e88]: "900"
+            - slider [ref=e89] [cursor=pointer]: "900"
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - generic [ref=e92]: Magnet Radius
+              - generic [ref=e93]: "15"
+            - slider [ref=e94] [cursor=pointer]: "15"
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]: Ring Radius
+              - generic [ref=e98]: "9"
+            - slider [ref=e99] [cursor=pointer]: "9"
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e102]: Field Strength
+              - generic [ref=e103]: "10"
+            - slider [ref=e104] [cursor=pointer]: "10"
+          - generic [ref=e105]:
+            - generic [ref=e106]:
+              - generic [ref=e107]: Wave Speed
+              - generic [ref=e108]: "0.4"
+            - slider [ref=e109] [cursor=pointer]: "0.4"
+          - generic [ref=e110]:
+            - generic [ref=e111]:
+              - generic [ref=e112]: Wave Amplitude
+              - generic [ref=e113]: "1"
+            - slider [ref=e114] [cursor=pointer]: "1"
+          - generic [ref=e115]:
+            - generic [ref=e116]:
+              - generic [ref=e117]: Particle Size
+              - generic [ref=e118]: "1.1"
+            - slider [ref=e119] [cursor=pointer]: "1.1"
+          - generic [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]: Size Variance
+              - generic [ref=e123]: "1"
+            - slider [ref=e124] [cursor=pointer]: "1"
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]: Pulse Speed
+              - generic [ref=e128]: "3"
+            - slider [ref=e129] [cursor=pointer]: "3"
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: Lerp Speed
+              - generic [ref=e133]: "0.05"
+            - slider [ref=e134] [cursor=pointer]: "0.05"
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - generic [ref=e137]: Rotation Speed
+              - generic [ref=e138]: "0.12"
+            - slider [ref=e139] [cursor=pointer]: "0.12"
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - generic [ref=e142]: Depth Factor
+              - generic [ref=e143]: "1"
+            - slider [ref=e144] [cursor=pointer]: "1"
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - generic [ref=e147]: Opacity
+              - generic [ref=e148]: "0.9"
+            - slider [ref=e149] [cursor=pointer]: "0.9"
+          - generic [ref=e151]:
+            - generic [ref=e152]: Auto Animate (idle)
+            - button [ref=e153] [cursor=pointer]
+          - generic [ref=e154]:
+            - generic [ref=e155]: Shape
+            - combobox [ref=e157]:
+              - option "capsule"
+              - option "sphere"
+              - option "box"
+              - option "tetrahedron"
+              - option "bracket"
+              - option "bracket-single" [selected]
+      - button "▨ Effects ▾" [ref=e159] [cursor=pointer]:
+        - generic [ref=e160]: ▨
+        - generic [ref=e161]: Effects
+        - generic [ref=e162]: ▾
+  - generic [ref=e163]:
+    - button "Apply & Save" [ref=e165]
+    - button "Export JSON" [ref=e166] [cursor=pointer]
+    - button "Revert" [ref=e167] [cursor=pointer]
+    - button "Reset to brand defaults" [ref=e168] [cursor=pointer]

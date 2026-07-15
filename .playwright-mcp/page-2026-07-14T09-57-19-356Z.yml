@@ -1,0 +1,14 @@
+- generic [active] [ref=f2e1]:
+  - main [ref=f2e2]:
+    - heading "Sovstac" [level=1] [ref=f2e3]
+    - generic [ref=f2e10]:
+      - generic [ref=f2e11]: SOV
+      - generic [ref=f2e12]: e
+      - generic [ref=f2e13]: r
+      - generic [ref=f2e14]: e
+      - generic [ref=f2e15]: i
+      - generic [ref=f2e16]: g
+      - generic [ref=f2e17]: "n"
+      - generic [ref=f2e19]: STAC
+      - generic [ref=f2e20]: k
+  - alert [ref=f2e21]

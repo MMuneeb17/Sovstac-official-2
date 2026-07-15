@@ -1,0 +1,2 @@
+[    1221ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.core.js:2000
+[    1415ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4321/favicon.ico:0

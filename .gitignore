@@ -1,14 +1,5 @@
-# Local MCP config — contains a Figma personal access token
+# Local MCP config — contains a Figma personal access token. NEVER commit.
 .mcp.json
 
 node_modules/
 .DS_Store
-
-# Playwright MCP scratch output (screenshots, snapshots, console logs)
-.playwright-mcp/
-
-# Build cache: vendored three/gsap/fonts, re-fetched by `npm run build`
-vendor/
-
-# Local agent tooling
-.codex/
