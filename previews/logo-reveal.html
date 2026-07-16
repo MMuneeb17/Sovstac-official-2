@@ -250,7 +250,10 @@ const DEFAULTS = {
     // Your line. It is clipped by the chamber, so keep it short enough to fit.
     text: 'Own your stack.',
     textFont: 'Ubuntu Mono',
-    textSize: 78,          // wordmark units
+    // Height of the line as a % of the bracket height. At 100 the text has the
+    // same relationship to the frame as the wordmark letters do to the "[ ]" —
+    // beats 1–4 match beat 5 onwards.
+    textSize: 100,
     textTracking: 0.08,    // em
     showRule: true,
   },
@@ -264,7 +267,10 @@ const DEFAULTS = {
     autoFit: true,
     textPadding: 90,        // wordmark units of clear space each side of the text
     openChamber: 1180,      // used only when autoFit is off
-    apertureOpen: 900,      // how wide the frame swings before it flies into the logo
+    // On the final reveal the frame opens past BOTH ends of the wordmark — the
+    // whole of SOVSTAC sits inside it. This is the clearance beyond each end,
+    // in wordmark units, before the brackets fly back in to their slot.
+    revealMargin: 70,
     armRest: 53,            // arm reach when sealed (the wordmark's true value)
     armOpen: 18,            // arm reach while open — arms retract so walls read as walls
     gap: 15,                // tip-to-tip slit at rest
@@ -276,13 +282,12 @@ const DEFAULTS = {
     hold1: 260,
     unseal1: 380,
     open1: 900,
-    textIn: 600,
+    textIn: 180,            // just the opacity snap — the opening itself does the revealing
     holdText: 900,
     close1: 860,
     seal1: 400,
     holdSealed: 340,
-    release: 560,
-    payoff: 1400,           // scale + recentre into the final lockup
+    payoff: 1400,           // one move: scale down + recentre + sweep open past the whole wordmark
     letterDur: 620,
     letterStagger: 60,
     // The beat where the wordmark sits there with a HOLE in it, before the brackets
@@ -299,7 +304,6 @@ const DEFAULTS = {
     close: 'power4.inOut',
     unseal: 'power3.inOut',
     text: 'expo.out',
-    release: 'power4.out',
     payoff: 'power4.inOut',
     letters: 'expo.out',
   },
@@ -323,7 +327,7 @@ const SCHEMA = [
     controls: [
       { path: 'content.text', label: 'Your Text', type: 'text' },
       { path: 'content.textFont', label: 'Text Font', type: 'select', options: ['Ubuntu Mono', 'Ubuntu', 'Michroma'] },
-      { path: 'content.textSize', label: 'Text Size', type: 'range', min: 20, max: 180, step: 1 },
+      { path: 'content.textSize', label: 'Text Height', type: 'range', min: 30, max: 120, step: 1, unit: '%' },
       { path: 'content.textTracking', label: 'Text Tracking', type: 'range', min: -0.05, max: 0.4, step: 0.005, unit: 'em' },
       { path: 'content.showRule', label: 'Hairline Rule', type: 'toggle' },
     ],
@@ -350,7 +354,7 @@ const SCHEMA = [
       { path: 'geometry.autoFit', label: 'Open To Fit Text', type: 'toggle' },
       { path: 'geometry.textPadding', label: 'Text Padding', type: 'range', min: 0, max: 400, step: 5 },
       { path: 'geometry.openChamber', label: 'Open Width (manual)', type: 'range', min: 200, max: 1900, step: 10 },
-      { path: 'geometry.apertureOpen', label: 'Fly-In Width', type: 'range', min: 130, max: 1600, step: 10 },
+      { path: 'geometry.revealMargin', label: 'Reveal Margin', type: 'range', min: 0, max: 300, step: 5 },
       { path: 'geometry.armRest', label: 'Arm Reach (sealed)', type: 'range', min: 0, max: 90, step: 1 },
       { path: 'geometry.armOpen', label: 'Arm Reach (open)', type: 'range', min: 0, max: 90, step: 1 },
       { path: 'geometry.gap', label: 'Slit Gap', type: 'range', min: 0, max: 120, step: 1 },
@@ -365,12 +369,11 @@ const SCHEMA = [
       { path: 'timing.hold1', label: 'Hold (closed)', type: 'range', min: 0, max: 2000, step: 20, unit: 'ms' },
       { path: 'timing.unseal1', label: 'Unseal', type: 'range', min: 0, max: 1200, step: 20, unit: 'ms' },
       { path: 'timing.open1', label: 'Open 1', type: 'range', min: 100, max: 2500, step: 20, unit: 'ms' },
-      { path: 'timing.textIn', label: 'Text In', type: 'range', min: 0, max: 2000, step: 20, unit: 'ms' },
+      { path: 'timing.textIn', label: 'Text Fade In', type: 'range', min: 0, max: 2000, step: 20, unit: 'ms' },
       { path: 'timing.holdText', label: 'Hold (text)', type: 'range', min: 0, max: 4000, step: 20, unit: 'ms' },
       { path: 'timing.close1', label: 'Close', type: 'range', min: 100, max: 2500, step: 20, unit: 'ms' },
       { path: 'timing.seal1', label: 'Seal', type: 'range', min: 0, max: 1200, step: 20, unit: 'ms' },
       { path: 'timing.holdSealed', label: 'Hold (sealed)', type: 'range', min: 0, max: 3000, step: 20, unit: 'ms' },
-      { path: 'timing.release', label: 'Release', type: 'range', min: 100, max: 2000, step: 20, unit: 'ms' },
       { path: 'timing.payoff', label: 'Payoff (scale)', type: 'range', min: 200, max: 3500, step: 20, unit: 'ms' },
       { path: 'timing.letterDur', label: 'Letter Duration', type: 'range', min: 100, max: 2000, step: 20, unit: 'ms' },
       { path: 'timing.letterStagger', label: 'Letter Stagger', type: 'range', min: 0, max: 300, step: 5, unit: 'ms' },
@@ -389,7 +392,6 @@ const SCHEMA = [
       { path: 'easing.close', label: 'Close', type: 'select', options: EASES },
       { path: 'easing.unseal', label: 'Unseal', type: 'select', options: EASES },
       { path: 'easing.text', label: 'Text', type: 'select', options: EASES },
-      { path: 'easing.release', label: 'Release', type: 'select', options: EASES },
       { path: 'easing.payoff', label: 'Payoff', type: 'select', options: EASES },
       { path: 'easing.letters', label: 'Letters', type: 'select', options: EASES },
     ],
@@ -498,6 +500,19 @@ function createLogoReveal(container, config, { onProgress } = {}) {
   clip.appendChild(clipRect);
   defs.appendChild(clip);
 
+  // The letters get their own aperture clip for the payoff sweep: a letter only
+  // EXISTS between the brackets, wiped into view by the frame opening across it.
+  // That is what makes the sweep a REVEAL — and it makes bracket-over-letter
+  // overlap impossible while the brackets are travelling outward (the left
+  // bracket crosses the S's position mid-sweep; without this the S would fade
+  // in underneath it). The clip is released the instant the sweep completes, so
+  // the fly-in still passes BEHIND the finished wordmark.
+  const lettersClipId = `${clipId}-letters`;
+  const lettersClip = svgEl('clipPath', { id: lettersClipId });
+  const lettersClipRect = svgEl('rect');
+  lettersClip.appendChild(lettersClipRect);
+  defs.appendChild(lettersClip);
+
   const textGroup = svgEl('g', { id: 'sv-text', 'clip-path': `url(#${clipId})` });
   const customText = svgEl('text', {
     'text-anchor': 'middle',
@@ -546,6 +561,15 @@ function createLogoReveal(container, config, { onProgress } = {}) {
 
   const S = {
     chamber: W.restChamber,   // clear width between the spines' inner faces
+    // Offset of the chamber's centre from the pair's home (pairCx), in wordmark
+    // units. Zero through the whole first act. On the final reveal it slides to
+    // the wordmark's centre so the frame can open past BOTH ends of S..C — the
+    // pair lives left of centre, so a symmetric opening could never clear the C.
+    shift: 0,
+    // 1 = the wordmark letters are gated by the aperture (payoff sweep: the
+    // opening frame wipes them into view), 0 = unclipped (fly-in: the brackets
+    // pass behind the finished wordmark). A .set state, so scrubs reverse it.
+    letterWipe: 1,
     armReach: W.restArmReach, // how far each arm reaches in from its spine
     scale: 1,
     px: 0,                    // where the pair centre lands on screen, x
@@ -564,6 +588,10 @@ function createLogoReveal(container, config, { onProgress } = {}) {
   // How wide the frame opens for the current text. Set in build(), read in draw()
   // to derive the text's scale from the chamber.
   let openTo = W.restChamber;
+  // Vertical nudge (wordmark units) that centres the text's INK BOX between the
+  // bracket ends — dominant-baseline is metric-based and lands mixed-case lines
+  // (ascenders one side, descenders the other) visibly off-centre.
+  let textDy = 0;
 
   const heroScale = () => cfg.geometry.heroBracketHeight / (W.bracketBottom - W.bracketTop);
   const finalScale = () => cfg.geometry.logoWidth / W.viewBox[2];
@@ -572,17 +600,50 @@ function createLogoReveal(container, config, { onProgress } = {}) {
   const finalPx = () => vw / 2 - (W.viewBox[2] / 2 - W.pairCx) * finalScale();
 
   /**
+   * BEATS 1–4 MATCH BEAT 5 ONWARDS: the custom line has the same relationship to
+   * the brackets as the wordmark letters do — its ink box spans the bracket
+   * height (times the Text Height %). Font metrics differ per family, so this
+   * fits by measurement: render at a probe size, measure the ink box, scale to
+   * the target, then centre the ink between the bracket ends.
+   */
+  function fitTextSize() {
+    const probe = 100;
+    const mid = (W.bracketTop + W.bracketBottom) / 2;
+    customText.setAttribute('font-size', probe);
+    customText.setAttribute('y', mid);
+
+    const target = (W.bracketBottom - W.bracketTop) * (cfg.content.textSize / 100);
+    let box = null;
+    try {
+      box = customText.getBBox();
+    } catch { /* not rendered yet */ }
+    if (!box || !box.height) {
+      customText.setAttribute('font-size', target * 0.8);
+      textDy = 0;
+      return;
+    }
+    customText.setAttribute('font-size', probe * (target / box.height));
+
+    try {
+      const b = customText.getBBox();
+      textDy = mid - (b.y + b.height / 2);
+    } catch {
+      textDy = 0;
+    }
+  }
+
+  /**
    * How wide the frame opens: as wide as your line needs, and no wider.
    *
-   * Measures the text as actually rendered (so it responds to the font, size and
-   * tracking you pick), then adds padding each side. Clamped at the top so a long
-   * line can't push the frame off the edges of the screen, and at the bottom so a
-   * short line still opens to something worth looking at.
+   * Measures the text as actually rendered (so it responds to the font, height
+   * and tracking you pick), then adds padding each side. No viewport clamp here —
+   * if the line is long, build() shrinks the WHOLE hero to fit the screen, so the
+   * text keeps its bracket-height relationship instead of shrinking inside a
+   * fixed frame.
    */
   function openChamberFor() {
     const g = cfg.geometry;
-    // Always start from the nominal size — otherwise a previous shrink compounds.
-    customText.setAttribute('font-size', cfg.content.textSize);
+    fitTextSize();
 
     if (!g.autoFit) return g.openChamber;
 
@@ -594,29 +655,18 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     }
     if (!textW) return g.openChamber;
 
-    // The widest the frame can be and still fit on screen at hero scale.
-    const maxOnScreen = vw / heroScale() - W.spine * 2 - 48;
-    const maxTextW = maxOnScreen - g.textPadding * 2;
-
-    // A line too long to fit on screen shrinks to fit rather than being clipped by
-    // its own frame — the chamber is capped by the viewport, so without this the
-    // text would just run under the brackets and get cut off.
-    if (textW > maxTextW && maxTextW > 0) {
-      customText.setAttribute('font-size', cfg.content.textSize * (maxTextW / textW));
-      textW = maxTextW;
-    }
-
     const min = W.restChamber + 60;
-    return Math.max(min, Math.min(textW + g.textPadding * 2, maxOnScreen));
+    return Math.max(min, textW + g.textPadding * 2);
   }
 
   function draw() {
     const { spine, armThickness: at, bracketTop: y0, bracketBottom: y1, pairCx } = W;
+    const cx = pairCx + S.shift; // where the chamber is centred right now
     const half = S.chamber / 2;
     const armLen = Math.max(0, S.armReach);
 
     // Left bracket: spine sits outside the chamber, arms reach in.
-    const lSpineX = pairCx - half - spine;
+    const lSpineX = cx - half - spine;
     L.spine.setAttribute('x', lSpineX);
     L.spine.setAttribute('y', y0);
     L.spine.setAttribute('width', spine);
@@ -630,7 +680,7 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     }
 
     // Right bracket: mirror.
-    const rSpineX = pairCx + half;
+    const rSpineX = cx + half;
     R.spine.setAttribute('x', rSpineX);
     R.spine.setAttribute('y', y0);
     R.spine.setAttribute('width', spine);
@@ -643,15 +693,26 @@ function createLogoReveal(container, config, { onProgress } = {}) {
       arm.setAttribute('height', at);
     }
 
-    // The chamber interior — what the custom text is clipped to. Insetting by the
-    // arm thickness keeps a glyph from ever poking through an arm.
-    clipRect.setAttribute('x', pairCx - half);
-    clipRect.setAttribute('y', y0 + at);
+    // The chamber interior — what the custom text is clipped to. Full bracket
+    // height: the text is as tall as the frame now, and the brackets paint OVER
+    // the text group, so an arm passing a glyph corner reads as the frame in
+    // front — not as clipping.
+    clipRect.setAttribute('x', cx - half);
+    clipRect.setAttribute('y', y0);
     clipRect.setAttribute('width', S.chamber);
-    clipRect.setAttribute('height', y1 - y0 - at * 2);
+    clipRect.setAttribute('height', y1 - y0);
+
+    // The letters' aperture gate — full height (letter ink runs a hair past the
+    // bracket ends), spine-to-spine in x. Applied only while letterWipe is on.
+    lettersClipRect.setAttribute('x', cx - half);
+    lettersClipRect.setAttribute('y', y0 - 40);
+    lettersClipRect.setAttribute('width', S.chamber);
+    lettersClipRect.setAttribute('height', y1 - y0 + 80);
+    if (S.letterWipe >= 0.5) lettersGroup.setAttribute('clip-path', `url(#${lettersClipId})`);
+    else lettersGroup.removeAttribute('clip-path');
 
     customText.setAttribute('x', pairCx);
-    customText.setAttribute('y', (y0 + y1) / 2);
+    customText.setAttribute('y', (y0 + y1) / 2 + textDy);
 
     // The text is CARRIED by the frame, not merely revealed inside it. Its scale is
     // derived from the chamber width rather than tweened separately, so it is exactly
@@ -718,7 +779,7 @@ function createLogoReveal(container, config, { onProgress } = {}) {
 
     customText.setAttribute('fill', p.text);
     customText.setAttribute('font-family', cfg.content.textFont);
-    customText.setAttribute('font-size', cfg.content.textSize);
+    // font-size is owned by fitTextSize() — textSize is a height %, not units.
     customText.setAttribute('letter-spacing', `${cfg.content.textTracking}em`);
     customText.textContent = cfg.content.text;
 
@@ -746,11 +807,23 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     const { timing: t, easing: e, geometry: g, palette: p } = cfg;
     const ms = n => n / 1000; // GSAP works in seconds
 
+    // How far the frame opens — sized to the text unless you've turned autoFit off.
+    openTo = openChamberFor();
+
+    // The hero scale, shrunk if the open frame wouldn't fit the viewport. The
+    // ENSEMBLE shrinks — bracket and text together — so the text keeps its
+    // bracket-height relationship no matter how long the line is.
+    let hs = heroScale();
+    const maxUnits = (vw - 48) / hs - W.spine * 2;
+    if (maxUnits > 0 && openTo > maxUnits) hs *= maxUnits / openTo;
+
     // Reset to the sealed hero state.
     Object.assign(S, {
       chamber: W.restChamber,
+      shift: 0,
+      letterWipe: 1,
       armReach: g.armRest,
-      scale: heroScale(),
+      scale: hs,
       px: vw / 2,
       py: vh / 2,
       frameOpacity: 0,
@@ -776,9 +849,6 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     });
     tl.timeScale(t.speed);
 
-    // How far the frame opens — sized to the text unless you've turned autoFit off.
-    openTo = openChamberFor();
-
     // ACT 1 — the sealed frame exists.
     tl.addLabel('boot', 0)
       .to(S, { frameOpacity: 1, duration: ms(t.bootIn), ease: 'expo.out' }, 'boot');
@@ -786,11 +856,13 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     tl.addLabel('unseal1', `+=${ms(t.hold1)}`)
       // The seal breaks before the walls move: arms retract, then the frame parts.
       .to(S, { armReach: g.armOpen, duration: ms(t.unseal1), ease: e.unseal }, 'unseal1')
+      // BEAT 2 IS BEAT 4 IN REVERSE. The line doesn't fade in after the doors are
+      // already open — it is REVEALED by the opening. Its scale is derived from the
+      // chamber, so the parting brackets drag it out of the slit exactly the way
+      // the closing ones will crush it back in. Opacity just snaps on in the first
+      // sliver of travel — the mirror of the kill at the end of the close.
+      .to(S, { textOpacity: 1, duration: ms(t.textIn), ease: e.text }, `unseal1+=${ms(t.unseal1 * 0.6)}`)
       .to(S, { chamber: openTo, duration: ms(t.open1), ease: e.open }, `unseal1+=${ms(t.unseal1 * 0.6)}`);
-
-    // ACT 2 — your line, held inside the open frame.
-    tl.addLabel('textIn', '>-0.15')
-      .to(S, { textOpacity: 1, duration: ms(t.textIn), ease: e.text }, 'textIn');
 
     tl.addLabel('close', `+=${ms(t.holdText)}`)
       // The text needs no fade of its own: its scale is derived from the chamber, so
@@ -825,18 +897,32 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     // sequenced against each other rather than appended.
     const payoffAt = tl.duration() + ms(t.holdSealed);
 
+    // The frame opens past BOTH ends of the wordmark — the whole of SOVSTAC will
+    // assemble INSIDE it, so the reveal covers the full text, not just the slot.
+    // The pair lives left of centre, so the chamber's centre has to slide to the
+    // wordmark's centre while it opens (a symmetric opening could never clear the C).
+    const wideChamber = W.viewBox[2] + g.revealMargin * 2;
+    const wideShift = W.viewBox[2] / 2 - W.pairCx;
+
     tl.addLabel('payoff', payoffAt)
       .set(S, { fillPhase: 2 }, payoffAt)
       .to(S, { armReach: g.armOpen, duration: ms(t.unseal1), ease: e.unseal }, payoffAt)
-      // Swings wider than the slot, so when the letters land the hole is unmistakable.
-      .to(S, { chamber: g.apertureOpen, duration: ms(t.release), ease: e.release }, payoffAt)
-      // The payoff transform: scale down AND slide left, together, as one move.
+      // The payoff transform: the frame sweeps out to embrace the whole wordmark
+      // while the stage scales down and recentres — all ONE move, one ease, so the
+      // brackets read as travelling outward to their framing position, not flying
+      // off on their own schedule.
       .to(S, {
+        chamber: wideChamber,
+        shift: wideShift,
         scale: finalScale(),
         px: finalPx(),
         duration: ms(t.payoff),
         ease: e.payoff,
-      }, payoffAt);
+      }, payoffAt)
+      // The sweep is done: the whole wordmark sits inside the frame, so the
+      // aperture gate comes off. From here the letters are unclipped and the
+      // fly-in brackets pass BEHIND them. (.set, so a reverse scrub re-gates.)
+      .set(S, { letterWipe: 0 }, payoffAt + ms(t.payoff));
 
     // The letters assemble OUTWARD from the brackets, not left-to-right — so the empty
     // slot reads as the origin of the wordmark. A goes last: its box overlaps T's by 49
@@ -862,7 +948,10 @@ function createLogoReveal(container, config, { onProgress } = {}) {
     const arriveAt = lettersEnd + ms(t.holdEmpty);
 
     tl.addLabel('arrive', arriveAt)
-      .to(S, { chamber: W.restChamber, duration: ms(t.collapse), ease: e.close }, arriveAt)
+      // Chamber and shift travel together: the left bracket steps in past the S,
+      // the right sweeps in from beyond the C, both passing BEHIND the letters,
+      // and they seat into the empty slot at the same instant.
+      .to(S, { chamber: W.restChamber, shift: 0, duration: ms(t.collapse), ease: e.close }, arriveAt)
       // The arms re-arm as the spines touch down — the slit narrows to its true 15u.
       .to(
         S,
@@ -1138,6 +1227,10 @@ function createControlPanel({
   presets: PRESETS = {},
   storageKey,
   onChange,
+  // Called after a successful Apply & Save with the applied config — lets the
+  // page persist the settings somewhere beyond localStorage (e.g. into its own
+  // HTML file via the File System Access API).
+  onSave,
   subtitle = '',
   exportName = 'sovstac.config.json',
   actions = [],
@@ -1206,6 +1299,9 @@ function createControlPanel({
       showToast('Applied (storage unavailable)');
     }
     refreshDirty();
+    // Synchronous call so a file picker inside onSave still counts as part of
+    // the click's user gesture.
+    onSave?.(clone(applied), { showToast });
   };
 
   const exportBtn = el('button', 'sv-btn', 'Export JSON');

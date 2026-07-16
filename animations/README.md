@@ -11,7 +11,7 @@ This is the map. The code lives in `../lib/`, the tunable previews in `../previe
 | Animation | Storyboard | Code | Preview | Status |
 |---|---|---|---|---|
 | Intro background (antigravity) | [intro-background.txt](intro-background.txt) | `lib/antigravity.js` | `previews/intro-background.html` | ✅ built |
-| Logo reveal (S[]Vereign STACk) | [logo-reveal.txt](logo-reveal.txt) | `lib/logo-reveal.js` | `previews/logo-reveal.html` | ✅ built |
+| Logo reveal ("Own your stack") | [logo-reveal.txt](logo-reveal.txt) | `previews/logo-reveal.html` (lib port pending) | `previews/logo-reveal.html` | ✅ built |
 | Work / case studies | — | — | — | ⬜ planned |
 | How we build | — | — | — | ⬜ planned |
 | Contact / audit | — | — | — | ⬜ planned |
